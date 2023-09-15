@@ -8,20 +8,32 @@ import {
 import { cors } from "@elysiajs/cors";
 import { Surah } from "@types";
 import { DEFAULT_PORT, ORIGINS } from "@config";
+import { swagger } from "@elysiajs/swagger";
 
-const app = new Elysia().onError(({ code, set }) => {
-  set.headers["Cache-Control"] =
-    "public, max-age=0, s-maxage=86400, stale-while-revalidate";
+const app = new Elysia()
+  .use(
+    swagger({
+      documentation: {
+        info: {
+          title: "Quranible API",
+          version: "1.0.0",
+        },
+      },
+    })
+  )
+  .onError(({ code, set }) => {
+    set.headers["Cache-Control"] =
+      "public, max-age=0, s-maxage=86400, stale-while-revalidate";
 
-  if (code === "NOT_FOUND") {
-    set.status = 404;
+    if (code === "NOT_FOUND") {
+      set.status = 404;
 
-    return {
-      message: "Surahs/ayahs not found",
-      data: null,
-    };
-  }
-});
+      return {
+        message: "Surahs/ayahs not found",
+        data: null,
+      };
+    }
+  });
 
 app.get("/", ({ set }) => {
   set.status = 200;

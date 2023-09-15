@@ -1,5 +1,5 @@
 import quran from "@data/quran.json";
-import type { QuranData } from "@types";
+import type { QuranData, Surah } from "@types";
 
 const { data } = quran as QuranData;
 
@@ -9,18 +9,19 @@ const getSurahs = () => {
 
     delete surah.verses;
     delete surah.preBismillah;
+
     return surah;
   });
 
   return {
     total: surahs.length,
-    data: surahs,
+    data: surahs as Surah[],
   };
 };
 
 const getSurahById = (id: number) => {
   const surah = data.find((item) => item.number === id);
-  return surah;
+  return surah as Surah;
 };
 
 const getSurahsByKeyword = (keyword: string) => {
@@ -40,7 +41,18 @@ const getSurahsByKeyword = (keyword: string) => {
     item.names?.includes(keyword.toLowerCase())
   );
 
-  return surahs;
+  return surahs as Surah[];
 };
 
-export { getSurahs, getSurahById, getSurahsByKeyword };
+const getAyahFromSurah = (surahId: number, ayahId: number) => {
+  const surah = getSurahById(surahId);
+
+  if (surah) {
+    const { verses } = surah;
+    const ayah = verses?.find((verse) => verse.number.inSurah === ayahId);
+
+    return ayah;
+  }
+};
+
+export { getSurahs, getSurahById, getSurahsByKeyword, getAyahFromSurah };

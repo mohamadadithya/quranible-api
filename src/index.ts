@@ -1,21 +1,29 @@
 import { Elysia, NotFoundError } from "elysia";
-import { getSurahById, getSurahs, getSurahsByKeyword } from "@core/getSurahs";
+import {
+  getAyahFromSurah,
+  getSurahById,
+  getSurahs,
+  getSurahsByKeyword,
+} from "@core/handlers";
 import { cors } from "@elysiajs/cors";
 import { origins } from "@config";
 import { Surah } from "@types";
 
+const DEFAULT_PORT = 8080;
+
 const app = new Elysia().onError(({ code, set }) => {
+  set.headers["Cache-Control"] =
+    "public, max-age=0, s-maxage=86400, stale-while-revalidate";
+
   if (code === "NOT_FOUND") {
     set.status = 404;
 
     return {
-      message: "Surahs not found",
+      message: "Surahs/ayahs not found",
       data: null,
     };
   }
 });
-
-const DEFAULT_PORT = 8080;
 
 app.get("/", ({ set }) => {
   set.status = 200;
@@ -78,6 +86,24 @@ app.get("/surahs/search/:keyword", ({ set, params }) => {
   }
 });
 
+app.get("/surahs/:id/ayahs/:ayahId", ({ set, params }) => {
+  const { id: surahId, ayahId } = params;
+  const ayah = getAyahFromSurah(Number(surahId), Number(ayahId));
+
+  if (ayah) {
+    set.status = 200;
+
+    return {
+      meta: {
+        message: "Ayah retrieved successfully",
+      },
+      data: ayah,
+    };
+  } else {
+    throw new NotFoundError();
+  }
+});
+
 app
   .use(
     cors({
@@ -87,5 +113,5 @@ app
   .listen(Bun.env.PORT ?? DEFAULT_PORT);
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `Quranible API is running at ${app.server?.hostname}:${app.server?.port}`
 );

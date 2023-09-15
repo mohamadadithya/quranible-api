@@ -13,5 +13,10 @@
   "devDependencies": {
     "bun-types": "^1.0.1"
   },
-  "module": "src/index.js"
+  "module": "src/index.js",
+  "repository": {
+    "url": "https://github.com/mohamadadithya/quranible-api"
+  },
+  "author": "Mohamad Adithya. <mohamadithya@gmail.com>",
+  "license": "MIT"
 }

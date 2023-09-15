@@ -63,6 +63,7 @@ interface Surah {
   };
   preBismillah?: string | null;
   verses?: Verse[];
+  names?: string;
 }
 
-export type { QuranData };
+export type { QuranData, Surah };

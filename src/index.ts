@@ -1,7 +1,7 @@
 import { Elysia, NotFoundError } from "elysia";
 import {
   getAyahFromSurah,
-  getJuzData,
+  getJuzById,
   getSurahById,
   getSurahs,
   getSurahsByKeyword,
@@ -131,7 +131,7 @@ app.get("/surahs/:id/ayahs/:ayahId", ({ set, params }) => {
 
 app.get("/juz/:juzId", ({ set, params }) => {
   const { juzId } = params;
-  const juz = getJuzData(Number(juzId));
+  const juz = getJuzById(Number(juzId));
 
   if (juz) {
     set.status = 200;

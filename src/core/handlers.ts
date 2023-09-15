@@ -5,7 +5,7 @@ import type { JuzData, QuranData, Surah, Verse } from "@types";
 const { data: quranData } = quran as QuranData;
 const { data: juzData } = juz as JuzData;
 
-const getJuzData = (juzId: number) => {
+const getJuzById = (juzId: number) => {
   const juzMeta = juzData[juzId - 1];
 
   if (juzMeta) {
@@ -134,5 +134,5 @@ export {
   getSurahById,
   getSurahsByKeyword,
   getAyahFromSurah,
-  getJuzData,
+  getJuzById,
 };

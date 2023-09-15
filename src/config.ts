@@ -1,3 +1,4 @@
-const origins = ["localhost", "quranible.com"];
+const ORIGINS = ["localhost", "quranible.com"];
+const DEFAULT_PORT = 8080;
 
-export { origins };
+export { ORIGINS, DEFAULT_PORT };

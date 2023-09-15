@@ -6,10 +6,8 @@ import {
   getSurahsByKeyword,
 } from "@core/handlers";
 import { cors } from "@elysiajs/cors";
-import { origins } from "@config";
 import { Surah } from "@types";
-
-const DEFAULT_PORT = 8080;
+import { DEFAULT_PORT, ORIGINS } from "@config";
 
 const app = new Elysia().onError(({ code, set }) => {
   set.headers["Cache-Control"] =
@@ -118,7 +116,7 @@ app.get("/surahs/:id/ayahs/:ayahId", ({ set, params }) => {
 app
   .use(
     cors({
-      origin: origins,
+      origin: ORIGINS,
     })
   )
   .listen(Bun.env.PORT ?? DEFAULT_PORT);

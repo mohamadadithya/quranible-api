@@ -1,6 +1,7 @@
 import { Elysia, NotFoundError } from "elysia";
 import {
   getAyahFromSurah,
+  getJuzData,
   getSurahById,
   getSurahs,
   getSurahsByKeyword,
@@ -29,7 +30,7 @@ const app = new Elysia()
       set.status = 404;
 
       return {
-        message: "Surahs/ayahs not found",
+        message: "Surahs/ayahs/juz not found",
         data: null,
       };
     }
@@ -51,6 +52,9 @@ app.get("/", ({ set }) => {
       },
       ayah: {
         bySurahId: "/surahs/:id/ayahs/:id",
+      },
+      juz: {
+        byId: "/juz/:id",
       },
     },
     source: "https://github.com/mohamadadithya/quranible-api",
@@ -119,6 +123,24 @@ app.get("/surahs/:id/ayahs/:ayahId", ({ set, params }) => {
         message: "Ayah retrieved successfully",
       },
       data: ayah,
+    };
+  } else {
+    throw new NotFoundError();
+  }
+});
+
+app.get("/juz/:juzId", ({ set, params }) => {
+  const { juzId } = params;
+  const juz = getJuzData(Number(juzId));
+
+  if (juz) {
+    set.status = 200;
+
+    return {
+      meta: {
+        message: "Juz retrieved successfully",
+      },
+      data: juz,
     };
   } else {
     throw new NotFoundError();

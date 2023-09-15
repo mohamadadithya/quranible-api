@@ -5,6 +5,24 @@ interface QuranData {
   data: Surah[];
 }
 
+interface JuzData {
+  license: string;
+  source: string;
+  data: Juz[];
+}
+
+interface Juz {
+  index: number;
+  start: {
+    index: number;
+    verse: number;
+  };
+  end: {
+    index: number;
+    verse: number;
+  };
+}
+
 interface Transliteration {
   en: string;
   id: string;
@@ -66,4 +84,4 @@ interface Surah {
   names?: string;
 }
 
-export type { QuranData, Surah };
+export type { QuranData, JuzData, Juz, Surah, Verse };

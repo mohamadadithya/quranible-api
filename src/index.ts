@@ -33,6 +33,17 @@ app.get("/", ({ set }) => {
       status: 200,
       message: "Welcome to Quranible API by Mohamad Adithya",
     },
+    routes: {
+      surah: {
+        all: "/surahs",
+        byId: "/surahs/:id",
+        byKeyword: "/surahs/:keyword",
+      },
+      ayah: {
+        bySurahId: "/surahs/:id/ayahs/:id",
+      },
+    },
+    source: "https://github.com/mohamadadithya/quranible-api",
   };
 });
 

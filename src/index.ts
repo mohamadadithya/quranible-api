@@ -125,13 +125,7 @@ app.get("/surahs/:id/ayahs/:ayahId", ({ set, params }) => {
   }
 });
 
-app
-  .use(
-    cors({
-      origin: ORIGINS,
-    })
-  )
-  .listen(Bun.env.PORT ?? DEFAULT_PORT);
+app.use(cors({ origin: ORIGINS })).listen(Bun.env.PORT ?? DEFAULT_PORT);
 
 console.log(
   `Quranible API is running at ${app.server?.hostname}:${app.server?.port}`

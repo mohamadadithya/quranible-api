@@ -150,5 +150,5 @@ app.get("/juz/:juzId", ({ set, params }) => {
 app.use(cors({ origin: ORIGINS })).listen(Bun.env.PORT ?? DEFAULT_PORT);
 
 console.log(
-  `Quranible API is running at ${app.server?.hostname}:${app.server?.port}`
+  `Quranible API is running at http://${app.server?.hostname}:${app.server?.port}`
 );
